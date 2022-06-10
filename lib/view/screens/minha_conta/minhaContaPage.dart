@@ -110,28 +110,15 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
       Center(
           child: Padding(
             padding: const EdgeInsets.only(top: 30.0),
-            child:  SizedBox(
-              width: 150,
-              child: Column(children: [
+            child: Column(children: [
+
               CircleAvatar(
                 radius: 50,
                 backgroundColor: Colors.red,
                 child: Icon(Icons.person, color: Colors.white),
               ),
-              SizedBox(height: 20),
-              SizedBox(
-                height: 10,
-                child:  TextField(
-                  controller: nameController,
-                  enabled: false,
-                  decoration: new InputDecoration(
-                    border: InputBorder.none,
-                  ),
-              ),
-              ),
               //Text('Rodolfinho Zika')
-            ])
-              ,),
+            ]),
           )),
       Padding(
         padding: const EdgeInsets.all(20.0),
