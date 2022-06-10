@@ -19,6 +19,7 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
   String? rua;
   String? numero;
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,8 +60,8 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
             key: _formKey,
             child: Column(children: [
               TextFormField(
-                onChanged: (String? value) {
-                  email = value;
+                onChanged: (String? value)  {
+
                 },
                 decoration: InputDecoration(
                   hintText: "me@me.com.br",
@@ -296,6 +297,7 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
                       reqBody["numero"] = numero;
 
                       RestServer.helper.postOrPutUser(reqBody);
+                      RestServer.helper.postOrPutUserDataCloudFirestore(reqBody);
                       //print(reqBody);
                     }
                   },

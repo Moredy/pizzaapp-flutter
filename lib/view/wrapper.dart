@@ -47,6 +47,8 @@ class WrapperState extends State<Wrapper> {
           return Scaffold(
               appBar: AppBar(
                 title: const Text("PizzaApp"),
+                centerTitle: true,
+                backgroundColor: Colors.red,
               ),
               drawer: Drawer(
                 child: ListView(
@@ -57,6 +59,7 @@ class WrapperState extends State<Wrapper> {
                         CircleAvatar(
                           radius: 50,
                           child: Icon(Icons.person),
+                          backgroundColor: Colors.red,
                         ),
                         SizedBox(height: 10),
                         Text('Matheus Marques')
@@ -118,10 +121,12 @@ class WrapperState extends State<Wrapper> {
                 ),
               ),
               floatingActionButton: FloatingActionButton(
-                  onPressed: () {
-                    BlocProvider.of<AuthBloc>(context).add(Logout());
-                  },
-                  child: const Icon(Icons.logout)),
+                onPressed: () {
+                  BlocProvider.of<AuthBloc>(context).add(Logout());
+                },
+                child: const Icon(Icons.logout),
+                backgroundColor: Colors.red,
+              ),
               body: const MainApp());
         } else {
           return //LoginScreen();
@@ -129,42 +134,48 @@ class WrapperState extends State<Wrapper> {
               DefaultTabController(
                   length: 2,
                   child: Scaffold(
-                    body: IndexedStack(
-                      index: currentScreen,
-                      children: <Widget> [
-                        Column(children: [
-                          RegisterScreen(),
-                          TextButton(
-                          onPressed: () {
-                            setState(() {
-                              currentScreen = 1;
-                            });
-                          },
-                          child: const Text("Já tem uma conta?"),
+                    body: IndexedStack(index: currentScreen, children: <Widget>[
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            RegisterScreen(),
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  currentScreen = 1;
+                                });
+                              },
+                              child: const Text("Já tem uma conta?", style: TextStyle(color: Colors.red)),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                    ),
-                        Column(children: [
-                          LoginScreen(),
-                          TextButton(
-                            onPressed: () {
-                              setState(() {
-                                currentScreen = 0;
-                              });
-                            },
-                            child: const Text("Ainda não tem uma conta?"),
-                          ),
-                        ],
-                        )
-                        /*const TabBarView(
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            LoginScreen(),
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  currentScreen = 0;
+                                });
+                              },
+                              child: const Text("Ainda não tem uma conta?", style: TextStyle(color: Colors.red)),
+                            ),
+                          ],
+                        ),
+                      ),
+                      /*const TabBarView(
                       children: [
                         RegisterScreen(),
                         LoginScreen()
                       ],
                     ),*/
-                ]),
+                    ]),
                     appBar: AppBar(
                       title: const Text("Pizza App"),
+                      centerTitle: true,
+                      backgroundColor: Colors.red,
                     ),
                   ));
         }
