@@ -18,10 +18,76 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
   String? bairro;
   String? rua;
   String? numero;
+  var currentUser;
+
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final telefoneController = TextEditingController();
+  final cepController = TextEditingController();
+  final bairroController = TextEditingController();
+  final ruaController = TextEditingController();
+  final numeroController = TextEditingController();
+
+
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    nameController.dispose();
+    emailController.dispose();
+    telefoneController.dispose();
+    cepController.dispose();
+    bairroController.dispose();
+    ruaController.dispose();
+    numeroController.dispose();
+
+    super.dispose();
+  }
+
+  /*
+  void _printLatestValue() {
+    print('Second text field:  ${myController.text}');
+  }
+  */
+
+  @override
+  void initState() {
+    super.initState();
+    loadUser();
+    // Start listening to changes.
+    //emailController.addListener(_printLatestValue);
+
+  }
+
+  void loadUser() async {
+    currentUser = await RestServer.helper.getCurrentUserData();
+    final Map<String, dynamic> data = Map.from(currentUser);
+    print(currentUser);
+    var  name = data['name'];
+    var  email = data['email'];
+    var  telefone = data['telefone'];
+    var  cep = data['cep'];
+    var  bairro = data['bairro'] ;
+    var  rua = data['rua'];
+    var  numero =  data['numero'];
+
+    //print(data['email']);
+
+    nameController.text = name ?? '';
+    emailController.text = email ?? '';
+    telefoneController.text = telefone ?? '';
+    cepController.text = cep ?? '';
+    bairroController.text = bairro ?? '';
+    ruaController.text = rua ?? '';
+    numeroController.text = numero ?? '';
+  }
+
 
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Minha conta'),
@@ -44,15 +110,28 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
       Center(
           child: Padding(
             padding: const EdgeInsets.only(top: 30.0),
-            child: Column(children: [
+            child:  SizedBox(
+              width: 150,
+              child: Column(children: [
               CircleAvatar(
                 radius: 50,
                 backgroundColor: Colors.red,
                 child: Icon(Icons.person, color: Colors.white),
               ),
-              SizedBox(height: 10),
-              Text('Rodolfinho Zika')
-            ]),
+              SizedBox(height: 20),
+              SizedBox(
+                height: 10,
+                child:  TextField(
+                  controller: nameController,
+                  enabled: false,
+                  decoration: new InputDecoration(
+                    border: InputBorder.none,
+                  ),
+              ),
+              ),
+              //Text('Rodolfinho Zika')
+            ])
+              ,),
           )),
       Padding(
         padding: const EdgeInsets.all(20.0),
@@ -63,9 +142,11 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
                 onChanged: (String? value)  {
 
                 },
+                controller: emailController,
                 decoration: InputDecoration(
                   hintText: "me@me.com.br",
                   labelText: "Email",
+
                   labelStyle: new TextStyle(color: Colors.black),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(color: Colors.red),
@@ -94,6 +175,7 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
                 onChanged: (String? value) {
                   nome = value;
                 },
+                controller: nameController,
                 decoration: InputDecoration(
                   hintText: "Juvenal",
                   labelText: "Nome",
@@ -125,6 +207,7 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
                 onChanged: (String? value) {
                   telefone = value;
                 },
+                controller: telefoneController,
                 decoration: InputDecoration(
                   hintText: "11 1 1111 1111",
                   labelText: "Telefone",
@@ -156,6 +239,7 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
                 onChanged: (String? value) {
                   cep = value;
                 },
+                controller: cepController,
                 decoration: InputDecoration(
                   hintText: "11111111",
                   labelText: "CEP",
@@ -187,6 +271,7 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
                 onChanged: (String? value) {
                   bairro = value;
                 },
+                controller: bairroController,
                 decoration: InputDecoration(
                   hintText: "Penha",
                   labelText: "Bairro",
@@ -218,6 +303,7 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
                 onChanged: (String? value) {
                   rua = value;
                 },
+                controller: ruaController,
                 decoration: InputDecoration(
                   hintText: "Rua Cláudio Maderada",
                   labelText: "Rua",
@@ -249,6 +335,7 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
                 onChanged: (String value) {
                   numero = value;
                 },
+                controller: numeroController,
                 decoration: InputDecoration(
                   hintText: "1111",
                   labelText: "Número",
@@ -288,13 +375,13 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
                       _formKey.currentState!.save();
                       // Realizar ação
                       var reqBody = {};
-                      reqBody["nome"] = nome;
-                      reqBody["email"] = email;
-                      reqBody["telefone"] = telefone;
-                      reqBody["cep"] = cep;
-                      reqBody["bairro"] = bairro;
-                      reqBody["rua"] = rua;
-                      reqBody["numero"] = numero;
+                      reqBody["nome"] = nameController.text;
+                      reqBody["email"] = emailController.text;
+                      reqBody["telefone"] = telefoneController.text;
+                      reqBody["cep"] = cepController.text;
+                      reqBody["bairro"] = bairroController.text;
+                      reqBody["rua"] = ruaController.text;
+                      reqBody["numero"] = numeroController.text;
 
                       RestServer.helper.postOrPutUser(reqBody);
                       RestServer.helper.postOrPutUserDataCloudFirestore(reqBody);
