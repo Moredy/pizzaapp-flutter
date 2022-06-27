@@ -27,7 +27,7 @@ class Wrapper extends StatefulWidget {
 }
 
 class WrapperState extends State<Wrapper> {
-  int currentScreen = 0;
+  int currentScreen = 1;
 
   final LocalStorage storage = new LocalStorage('localstorage_app');
   @override
