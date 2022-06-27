@@ -89,7 +89,7 @@ class _PedidosRoute extends State<PedidosRoute> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => PagamentoPage(),
+                builder: (context) => PagamentoPage(storage: widget.storage),
               ),
             );
           },

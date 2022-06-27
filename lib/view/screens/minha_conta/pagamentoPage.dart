@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 import '../meus_pedidos/aguardandoPedidoPage.dart';
 
 class PagamentoPage extends StatefulWidget {
-  const PagamentoPage({Key? key}) : super(key: key);
+  final LocalStorage storage;
+  const PagamentoPage({Key? key, required this.storage}) : super(key: key);
 
   @override
   State<PagamentoPage> createState() => _PagamentoPage();
@@ -38,7 +40,7 @@ class _PagamentoPage extends State<PagamentoPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => AguardandoPedidoPage(),
+                builder: (context) => AguardandoPedidoPage(storage: widget.storage),
               ),
             );
           },

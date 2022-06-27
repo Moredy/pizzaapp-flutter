@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 import '../../main_app.dart';
 import '../../wrapper.dart';
 
 class AguardandoPedidoPage extends StatefulWidget {
-  const AguardandoPedidoPage({Key? key}) : super(key: key);
+  final LocalStorage storage;
+  const AguardandoPedidoPage({Key? key, required this.storage}) : super(key: key);
 
   @override
   State<AguardandoPedidoPage> createState() => _AguardandoPedidoPage();
@@ -41,6 +43,7 @@ class _AguardandoPedidoPage extends State<AguardandoPedidoPage> {
               Expanded(
                   child: RaisedButton(
                     onPressed: () {
+                      widget.storage.setItem('carrinho', '[]');
                       Navigator.of(context).popUntil((route) => route.isFirst);
                     },
                     child: Text("Confirmar entrega"),
@@ -50,6 +53,7 @@ class _AguardandoPedidoPage extends State<AguardandoPedidoPage> {
               Expanded(
                   child: RaisedButton(
                     onPressed: () {
+                      widget.storage.setItem('carrinho', '[]');
                       Navigator.of(context).popUntil((route) => route.isFirst);
                     },
                     child: Text("Cancelar"),
