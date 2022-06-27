@@ -63,12 +63,12 @@ class MainApp extends StatelessWidget {
                                       style: TextStyle(fontSize: 27),
                                     ),
                                     onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => CardapioRoute(),
-                                        ),
-                                      );
+                                      //Navigator.push(
+                                      //  context,
+                                      //  MaterialPageRoute(
+                                      //    builder: (context) => CardapioRoute(),
+                                      //  ),
+                                      //);
                                     },
                                     color: Colors.red,
                                     textColor: Colors.white,

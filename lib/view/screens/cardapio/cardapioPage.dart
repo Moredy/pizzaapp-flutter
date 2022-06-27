@@ -1,19 +1,50 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 // configura os botões
 
 class CardapioRoute extends StatefulWidget {
-  const CardapioRoute({Key? key}) : super(key: key);
+
+  final LocalStorage storage;
+  final bool showHeader;
+  const CardapioRoute({Key? key,  required this.storage , required this.showHeader}) : super(key: key);
 
   @override
   State<CardapioRoute> createState() => _CardapioRoute();
 }
 
 class _CardapioRoute extends State<CardapioRoute> {
+
+  String nomePizza = '';
+  num pizzaValor = 0 ;
+
+
   @override
   Widget build(BuildContext context) {
+
     Widget lembrarButton = FlatButton(
       child: Text("Sim"),
-      onPressed: () {},
+      onPressed: () {
+        //widget.storage.setItem('carrinho', '');
+
+        var carrinho = widget.storage.getItem('carrinho');
+
+        List carrinhoObj = [];
+
+        if (carrinho != null && carrinho.length > 0) {
+          carrinhoObj = json.decode(carrinho);
+        }
+
+        carrinhoObj.insert(0, {nomePizza: pizzaValor});
+
+        widget.storage.setItem('carrinho', json.encode(carrinhoObj));
+
+        print(carrinhoObj);
+
+        Navigator.of(context, rootNavigator: true).pop();
+
+      },
     );
     Widget cancelaButton = FlatButton(
       child: Text("Não"),
@@ -21,6 +52,8 @@ class _CardapioRoute extends State<CardapioRoute> {
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
+
+
 
     AlertDialog alert = AlertDialog(
       title: Text("Adicionar item"),
@@ -32,11 +65,12 @@ class _CardapioRoute extends State<CardapioRoute> {
     );
 
     return Scaffold(
-      appBar: AppBar(
+
+      appBar: widget.showHeader == true ? AppBar(
         title: const Text('Cardápio'),
         centerTitle: true,
         backgroundColor: Colors.red,
-      ),
+      ) : null,
       body: Center(
           child: ListView(
             shrinkWrap: true,
@@ -53,6 +87,8 @@ class _CardapioRoute extends State<CardapioRoute> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
+                          nomePizza = 'Mussarela';
+                          pizzaValor = 50;
                           return alert;
                         },
                       );
@@ -76,6 +112,8 @@ class _CardapioRoute extends State<CardapioRoute> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
+                          nomePizza = '4 queijos';
+                          pizzaValor = 50;
                           return alert;
                         },
                       );
@@ -99,12 +137,14 @@ class _CardapioRoute extends State<CardapioRoute> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
+                          nomePizza = 'Banana com Canela';
+                          pizzaValor = 25;
                           return alert;
                         },
                       );
                     },
                     splashColor: Colors.brown.withOpacity(0.5),
-                    child: Padding(padding: const EdgeInsets.all(10.0), child: Container(alignment: Alignment.bottomRight, padding: const EdgeInsets.all(0), child: const Text("Banana com Canela - 50 reais", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)))),
+                    child: Padding(padding: const EdgeInsets.all(10.0), child: Container(alignment: Alignment.bottomRight, padding: const EdgeInsets.all(0), child: const Text("Banana com Canela - 25 reais", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)))),
                   ),
                 ),
 
@@ -122,6 +162,8 @@ class _CardapioRoute extends State<CardapioRoute> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
+                          nomePizza = 'Calabresa';
+                          pizzaValor = 50;
                           return alert;
                         },
                       );
@@ -145,12 +187,14 @@ class _CardapioRoute extends State<CardapioRoute> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
+                          nomePizza = 'Carne seca';
+                          pizzaValor = 30;
                           return alert;
                         },
                       );
                     },
                     splashColor: Colors.brown.withOpacity(0.5),
-                    child: Padding(padding: const EdgeInsets.all(10.0), child: Container(alignment: Alignment.bottomRight, padding: const EdgeInsets.all(0), child: const Text("Carne Seca - 50 reais", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)))),
+                    child: Padding(padding: const EdgeInsets.all(10.0), child: Container(alignment: Alignment.bottomRight, padding: const EdgeInsets.all(0), child: const Text("Carne Seca - 30 reais", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)))),
                   ),
                 ),
 
@@ -168,12 +212,14 @@ class _CardapioRoute extends State<CardapioRoute> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
+                          nomePizza = 'Frango com Catupiry';
+                          pizzaValor = 60;
                           return alert;
                         },
                       );
                     },
                     splashColor: Colors.brown.withOpacity(0.5),
-                    child: Padding(padding: const EdgeInsets.all(10.0), child: Container(alignment: Alignment.bottomRight, padding: const EdgeInsets.all(0), child: const Text("Frango com Catupiry - 50 reais", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)))),
+                    child: Padding(padding: const EdgeInsets.all(10.0), child: Container(alignment: Alignment.bottomRight, padding: const EdgeInsets.all(0), child: const Text("Frango com Catupiry - 60 reais", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)))),
                   ),
                 ),
 
@@ -191,12 +237,14 @@ class _CardapioRoute extends State<CardapioRoute> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
+                          nomePizza = 'Chocolate';
+                          pizzaValor = 30;
                           return alert;
                         },
                       );
                     },
                     splashColor: Colors.brown.withOpacity(0.5),
-                    child: Padding(padding: const EdgeInsets.all(10.0), child: Container(alignment: Alignment.bottomRight, padding: const EdgeInsets.all(0), child: const Text("Chocolate - 50 reais", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)))),
+                    child: Padding(padding: const EdgeInsets.all(10.0), child: Container(alignment: Alignment.bottomRight, padding: const EdgeInsets.all(0), child: const Text("Chocolate - 30 reais", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)))),
                   ),
                 ),
 
@@ -214,6 +262,8 @@ class _CardapioRoute extends State<CardapioRoute> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
+                          nomePizza = 'Lombo';
+                          pizzaValor = 50;
                           return alert;
                         },
                       );
@@ -237,12 +287,14 @@ class _CardapioRoute extends State<CardapioRoute> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
+                          nomePizza = 'Marguerita';
+                          pizzaValor = 65;
                           return alert;
                         },
                       );
                     },
                     splashColor: Colors.brown.withOpacity(0.5),
-                    child: Padding(padding: const EdgeInsets.all(10.0), child: Container(alignment: Alignment.bottomRight, padding: const EdgeInsets.all(0), child: const Text("Marguerita - 50 reais", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)))),
+                    child: Padding(padding: const EdgeInsets.all(10.0), child: Container(alignment: Alignment.bottomRight, padding: const EdgeInsets.all(0), child: const Text("Marguerita - 65 reais", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white)))),
                   ),
                 ),
 

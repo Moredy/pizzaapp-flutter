@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../provider/account_info.dart';
 
 class MinhaContaRoute extends StatefulWidget {
+
   const MinhaContaRoute({Key? key}) : super(key: key);
 
   @override
@@ -125,39 +126,6 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
         child: Form(
             key: _formKey,
             child: Column(children: [
-              TextFormField(
-                onChanged: (String? value)  {
-
-                },
-                controller: emailController,
-                decoration: InputDecoration(
-                  hintText: "me@me.com.br",
-                  labelText: "Email",
-
-                  labelStyle: new TextStyle(color: Colors.black),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red),
-                  ),
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.red),
-                  ),
-                ),
-                onSaved: (String? value) {},
-                validator: (String? value) {
-                  if (value != null) {
-                    if (value.isEmpty) {
-                      return "Escreva algo";
-                    } else {
-                      return null;
-                    }
-                  } else {
-                    return "Algo errado ocorreu";
-                  }
-                },
-              ),
               TextFormField(
                 onChanged: (String? value) {
                   nome = value;
@@ -363,7 +331,6 @@ class _MinhaContaRouteState extends State<MinhaContaRoute> {
                       // Realizar ação
                       var reqBody = {};
                       reqBody["nome"] = nameController.text;
-                      reqBody["email"] = emailController.text;
                       reqBody["telefone"] = telefoneController.text;
                       reqBody["cep"] = cepController.text;
                       reqBody["bairro"] = bairroController.text;

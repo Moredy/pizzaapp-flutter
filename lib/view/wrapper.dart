@@ -15,6 +15,7 @@ import '../view/screens/minha_conta/minhaContaPage.dart';
 import '../view/screens/minha_conta/pagamentoPage.dart';
 import '../view/screens/minha_conta/pedidosPage.dart';
 import '../view/screens/promocoes/promocoesPage.dart';
+import 'package:localstorage/localstorage.dart';
 
 class Wrapper extends StatefulWidget {
   const Wrapper({Key? key}) : super(key: key);
@@ -27,6 +28,8 @@ class Wrapper extends StatefulWidget {
 
 class WrapperState extends State<Wrapper> {
   int currentScreen = 0;
+
+  final LocalStorage storage = new LocalStorage('localstorage_app');
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
@@ -72,7 +75,7 @@ class WrapperState extends State<Wrapper> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PedidosRoute(),
+                            builder: (context) => PedidosRoute(storage: storage),
                           ),
                         );
                       },
@@ -98,7 +101,7 @@ class WrapperState extends State<Wrapper> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CardapioRoute(),
+                            builder: (context) => CardapioRoute(storage: storage, showHeader: true),
                           ),
                         );
                       },
@@ -111,7 +114,7 @@ class WrapperState extends State<Wrapper> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PromocoesRoute(),
+                            builder: (context) => PromocoesRoute(storage: storage),
                           ),
                         );
                       },
@@ -127,7 +130,7 @@ class WrapperState extends State<Wrapper> {
                 child: const Icon(Icons.logout),
                 backgroundColor: Colors.red,
               ),
-              body: const MainApp());
+              body: CardapioRoute(storage: storage, showHeader: false));
         } else {
           return //LoginScreen();
 

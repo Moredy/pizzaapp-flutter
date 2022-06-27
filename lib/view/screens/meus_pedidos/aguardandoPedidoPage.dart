@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../main_app.dart';
+import '../../wrapper.dart';
 
 class AguardandoPedidoPage extends StatefulWidget {
   const AguardandoPedidoPage({Key? key}) : super(key: key);
@@ -40,12 +41,7 @@ class _AguardandoPedidoPage extends State<AguardandoPedidoPage> {
               Expanded(
                   child: RaisedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MainApp(),
-                        ),
-                      );
+                      Navigator.of(context).popUntil((route) => route.isFirst);
                     },
                     child: Text("Confirmar entrega"),
                     color: Colors.green,
@@ -54,12 +50,7 @@ class _AguardandoPedidoPage extends State<AguardandoPedidoPage> {
               Expanded(
                   child: RaisedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MainApp(),
-                        ),
-                      );
+                      Navigator.of(context).popUntil((route) => route.isFirst);
                     },
                     child: Text("Cancelar"),
                     color: Colors.red,

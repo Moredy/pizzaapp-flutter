@@ -1,7 +1,12 @@
+import 'dart:convert';
+
+import 'package:br/view/screens/minha_conta/pedidosPage.dart';
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 
 class PromocoesRoute extends StatefulWidget {
-  const PromocoesRoute({Key? key}) : super(key: key);
+  final LocalStorage storage;
+  const PromocoesRoute({Key? key, required this.storage}) : super(key: key);
 
   State<PromocoesRoute> createState() => _PromocoesRouteState();
 }
@@ -11,6 +16,44 @@ class _PromocoesRouteState extends State<PromocoesRoute> {
 
   @override
   Widget build(BuildContext context) {
+
+    var storage = widget.storage;
+
+
+    showAlertDialog(BuildContext context) {
+
+      // set up the button
+      Widget okButton = TextButton(
+        child: Text("OK"),
+        onPressed: () {
+          Navigator.of(context).pop();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PedidosRoute(storage: storage)),
+          );
+        },
+      );
+
+      // set up the AlertDialog
+      AlertDialog alert = AlertDialog(
+        title: Text("Combo"),
+        content: Text("Seu combo foi adicionado ao carrinho."),
+        actions: [
+          okButton,
+        ],
+      );
+
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+
+    // set up the button
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Promoções'),
@@ -108,7 +151,7 @@ class _PromocoesRouteState extends State<PromocoesRoute> {
                                   ),
                                 ),
                                 new Text(
-                                  "- R\$ 80 ",
+                                  "- R\$ 90 ",
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -125,14 +168,21 @@ class _PromocoesRouteState extends State<PromocoesRoute> {
                                           style: TextStyle(fontSize: 27),
                                         ),
                                         onPressed: () {
-                                          /*
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CardapioRoute(),
-                                ),
-                              );
-                            */
+
+                                          var carrinho = widget.storage.getItem('carrinho');
+
+                                          List carrinhoObj = [];
+
+                                          if (carrinho != null && carrinho.length > 0) {
+                                            carrinhoObj = json.decode(carrinho);
+                                          }
+
+                                          carrinhoObj.insert(0, {"Mussarela": 50});
+                                          carrinhoObj.insert(0, {"Chocolate": 30});
+                                          carrinhoObj.insert(0, {"Coca": 10});
+
+                                          widget.storage.setItem('carrinho', json.encode(carrinhoObj));
+                                          showAlertDialog(context);
                                         },
                                         color: Colors.red,
                                         textColor: Colors.white,
@@ -223,14 +273,21 @@ class _PromocoesRouteState extends State<PromocoesRoute> {
                                           style: TextStyle(fontSize: 27),
                                         ),
                                         onPressed: () {
-                                          /*
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CardapioRoute(),
-                                ),
-                              );
-                            */
+
+                                          var carrinho = widget.storage.getItem('carrinho');
+
+                                          List carrinhoObj = [];
+
+                                          if (carrinho != null && carrinho.length > 0) {
+                                            carrinhoObj = json.decode(carrinho);
+                                          }
+
+                                          carrinhoObj.insert(0, {"Meia Calabresa Meia Portuguesa": 50});
+                                          carrinhoObj.insert(0, {"Chocolate": 30});
+                                          carrinhoObj.insert(0, {"Coca": 10});
+
+                                          widget.storage.setItem('carrinho', json.encode(carrinhoObj));
+                                          showAlertDialog(context);
                                         },
                                         color: Colors.red,
                                         textColor: Colors.white,
@@ -321,14 +378,21 @@ class _PromocoesRouteState extends State<PromocoesRoute> {
                                           style: TextStyle(fontSize: 27),
                                         ),
                                         onPressed: () {
-                                          /*
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CardapioRoute(),
-                                ),
-                              );
-                            */
+                                          var carrinho = widget.storage.getItem('carrinho');
+
+                                          List carrinhoObj = [];
+
+                                          if (carrinho != null && carrinho.length > 0) {
+                                            carrinhoObj = json.decode(carrinho);
+                                          }
+
+                                          carrinhoObj.insert(0, {"Morango": 60});
+                                          carrinhoObj.insert(0, {"Chocolate": 30});
+                                          carrinhoObj.insert(0, {"Coca": 10});
+
+                                          widget.storage.setItem('carrinho', json.encode(carrinhoObj));
+
+                                          showAlertDialog(context);
                                         },
                                         color: Colors.red,
                                         textColor: Colors.white,
